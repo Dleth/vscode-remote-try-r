@@ -14,6 +14,42 @@ summary(data)
 ggplot(data, aes(x = lotsize, y = price)) + 
   geom_point() 
 
+# botplot of the bedrooms and price
+ggplot(data, aes(x = as.factor(bedrooms), y = price)) + 
+    geom_boxplot()
+
+# botplot of the bathrooms and price
+ggplot(data, aes(x = as.factor(bedrooms), y = price)) + 
+    geom_boxplot()
+
+# boxplot of stories and price
+ggplot(data, aes(x = as.factor(stories), y = price)) + 
+    geom_boxplot()
+
+# boxplot of driveway and price
+ggplot(data, aes(x = as.factor(driveway), y = price)) + 
+    geom_boxplot()
+
+# boxplot of recroom and price
+ggplot(data, aes(x = as.factor(recroom), y = price)) + 
+    geom_boxplot()
+
+# boxplot of gashw and price
+ggplot(data, aes(x = as.factor(gashw), y = price)) + 
+    geom_boxplot()
+
+# boxplot of airco and price
+ggplot(data, aes(x = as.factor(airco), y = price)) + 
+    geom_boxplot()
+
+# boxplot of garagepl and price
+ggplot(data, aes(x = as.factor(garagepl), y = price)) + 
+    geom_boxplot()
+
+# boxplot of prefarea and price
+ggplot(data, aes(x = as.factor(prefarea), y = price)) + 
+    geom_boxplot()
+
 # liner model between lotsize and price
 lm1<- lm(data$lotsize ~ data$price)
 lm1
@@ -75,4 +111,45 @@ ggplot(data, aes(x = price, y = res2)) +
   geom_point()
 
 ggplot(data, aes(x = price, y = res3)) + 
+  geom_point()
+
+
+# convert columns to factors
+data$bedrooms <- factor(data$bedrooms)
+data$driveway <- factor(data$driveway)
+data$stories <- factor(data$stories)
+data$recroom <- factor(data$recroom)
+data$fullbase <- factor(data$fullbase)
+data$gashw <- factor(data$gashw)
+data$airco <- factor(data$airco)
+data$garagepl <- factor(data$garagepl)
+data$prefarea <- factor(data$prefarea)
+
+# liner model between al the columns and price
+lm4<- lm(data$price ~ data$lotsize + data$bedrooms+ data$bathrms + data$driveway + data$stories + data$recroom + data$fullbase + data$gashw + data$airco + data$garagepl + data$prefarea)
+
+# the residuals
+res4 <- residuals(lm4)
+data$res4 <- res4
+
+# stepwise regression
+lm4_step<- step(lm4)
+
+# the residuals
+res4_step <- residuals(lm4_step)
+data$res4_step <- res4_step
+
+# step with interaction
+lm4_step_intera<- step(lm4_step, scope = ~.*.)
+res4_step_intera <- residuals(lm4_step_intera)
+data$res4_step_intera <- res4_step_intera
+
+# plot the residuals
+ggplot(data, aes(x = price, y = res4)) + 
+  geom_point()
+
+ggplot(data, aes(x = price, y = res4_step)) + 
+  geom_point()
+
+ggplot(data, aes(x = price, y = res4_step_intera)) + 
   geom_point()
