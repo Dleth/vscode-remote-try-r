@@ -58,7 +58,7 @@ lm1
 res1 <- residuals(lm1)
 data$res1 <- res1
 
-# add number of bedrooms as a predictor
+# add number of bedrooms and bathrooms as a predictor
 lm2<- lm(data$price ~ data$lotsize + data$bedrooms+ data$bathrms)
 lm2 
 # the residuals
@@ -86,7 +86,7 @@ ggplot(data, aes(x = bathrms, y = price)) +
 data$driveway <- factor(data$driveway)
 
 # add driveway as a predictor
-lm3<- lm(data$price ~ data$lotsize + data$bedrooms+ data$bathrms + data$driveway)
+lm3<- lm(data$price ~ data$lotsize + data$bedrooms+ data$bathrms)
 lm3
 # the residuals
 res3 <- residuals(lm3)
@@ -103,14 +103,25 @@ lm2_new
 res2_new <- residuals(lm2_new)
 data$res2_new <- res2_new
 
-# the scatter plot of residuals
+# the scatter plot of residuals, mean and standard deviation of the residuals
+mean(res1)
+sd(res1)
 ggplot(data, aes(x = price, y = res1)) + 
   geom_point()
 
+mean(res2)
+sd(res2)
 ggplot(data, aes(x = price, y = res2)) + 
   geom_point()
 
+mean(res3)
+sd(res3)
 ggplot(data, aes(x = price, y = res3)) + 
+  geom_point()
+
+mean(res2_new)
+sd(res2_new)
+ggplot(data, aes(x = price, y = res2_new)) + 
   geom_point()
 
 
@@ -144,12 +155,18 @@ lm4_step_intera<- step(lm4_step, scope = ~.*.)
 res4_step_intera <- residuals(lm4_step_intera)
 data$res4_step_intera <- res4_step_intera
 
-# plot the residuals
+# plot the residuals 
+mean(res4)
+sd(res4)
 ggplot(data, aes(x = price, y = res4)) + 
   geom_point()
 
+mean(res4_step)
+sd(res4_step)
 ggplot(data, aes(x = price, y = res4_step)) + 
   geom_point()
 
+mean(res4_step_intera)
+sd(res4_step_intera)
 ggplot(data, aes(x = price, y = res4_step_intera)) + 
   geom_point()
